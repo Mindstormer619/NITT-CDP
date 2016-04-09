@@ -21,6 +21,13 @@ Route::get('/', function () {
 Route::post('/api/register', 'UserController@store');
 Route::post('/api/login', 'Auth\AuthenticateController@postLogin');
 
+// Collections
+Route::get('/api/collections', 'CollectionController@index');
+Route::post('/api/collections', 'CollectionController@store');
+Route::get('/api/collections/{id}', 'CollectionController@show');
+Route::put('/api/collections/{id}', 'CollectionController@update');
+
+
 // test route for jwt auth middleware
 Route::get('/api/testJwt', ['middleware'=>'jwt.auth', function(Request $request) {
 	return response()->json(['message'=>'Works!', 'username' => $request->user()->username], 200);
