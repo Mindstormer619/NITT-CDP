@@ -104,6 +104,14 @@ implements
         return $this->hasMany('App\Vote', 'user_id');
     }
 
+    public function getCreatedCircles() {
+        return $this->hasMany('App\Circle', 'creator');
+    }
+
+    public function getCircles() {
+        return $this->belongsToMany('App\Circle', 'circles_users_map');
+    }
+
 
     protected function validator(array $userdata) {
         Log::info('Validator data: ', $userdata);

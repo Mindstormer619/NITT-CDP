@@ -34,4 +34,8 @@ class Topic extends Model
     public function getEditors() {
         return $this->belongsToMany('App\User', 'role_editors')->withTimestamps();
     }
+
+    public function getCircles() {
+        return $this->hasMany('App\Circle', 'topic_id');
+    }
 }

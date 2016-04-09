@@ -30,4 +30,8 @@ class Post extends Model
     public function getVotes() {
         return $this->morphMany('App\Vote', 'voteable');
     }
+
+    public function getCircles() {
+        return $this->belongsToMany('App\Circle', 'circles_posts_map');
+    }
 }
