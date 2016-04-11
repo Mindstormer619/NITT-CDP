@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Collection;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CollectionController extends Controller
+use App\Topic;
+
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,10 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        $collectionList = Collection::with(['getTopics'])->get();
-        return $collectionList;
+        $topicList = Topic::with(['getPosts', 'getEvents', 'getCircles'])->get();
+        return $topicList;
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -29,11 +31,8 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        $collection = new Collection;
-        $collection->name = $request->name;
-        $collection->description = $request->description;
-
-        $collection->save();
+        $topic = new Topic($request->name, $request->description, $request->collection_id);
+        $topic->save();
 
         return response('', 200);
     }
@@ -46,7 +45,7 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
-        return Collection::with('getTopics')->find($id);
+        return Topic::with(['getPosts', 'getEvents', 'getCircles'])->find($id);
     }
 
     /**
@@ -58,14 +57,15 @@ class CollectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $collection = Collection::find($id);
+        //
+        $topic = Topic::find($id);
 
-        $collection->name = (isset($request->name))?($request->name):($collection->name);
-        $collection->description = (isset($request->description))?($request->description):($collection->description);
+        $topic->name = (!isset($request->name))?$topic->name:($request->name);
+        $topic->description = (!isset($request->description))?$topic->description:($request->description);
 
-        $collection->save();
+        $topic->save();
 
-        return response('Done', 200);
+        return response('', 200);
     }
 
     /**

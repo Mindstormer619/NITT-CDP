@@ -11,6 +11,14 @@ class Topic extends Model
 
     protected $fillable = ['name', 'description'];
 
+    public function __construct($name=null, $description=null, $collectionID=null) {
+        parent::__construct();
+
+        $this->name = $name;
+        $this->description = $description;
+        $this->collection_id = $collectionID;
+    }
+
     public function getCollection() {
         return $this->belongsTo('App\Collection', 'collection_id');
     }

@@ -27,6 +27,12 @@ Route::post('/api/collections', 'CollectionController@store');
 Route::get('/api/collections/{id}', 'CollectionController@show');
 Route::put('/api/collections/{id}', 'CollectionController@update');
 
+// Topics
+Route::get('/api/topics', 'TopicController@index');
+Route::post('/api/topics', 'TopicController@store');
+Route::get('/api/topics/{id}', 'TopicController@show');
+Route::put('/api/topics/{id}', 'TopicController@update');
+
 
 // test route for jwt auth middleware
 Route::get('/api/testJwt', ['middleware'=>'jwt.auth', function(Request $request) {
